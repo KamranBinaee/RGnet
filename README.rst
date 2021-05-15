@@ -128,19 +128,19 @@ When creating a new repository from this skeleton, these are the steps to follow
 
     Which will make changes in the following places.
 
-    - In ``setup.py``, `L69 <https://github.com/scottclowe/python-template-repo/blob/master/setup.py#L69>`__::
+    - In ``setup.py``, `L69 <https://github.com/KamranBinaee/RGnet/blob/master/setup.py#L69>`__::
 
         exec(read('package_name/__meta__.py'), meta)
 
-    - In ``docs/conf.py``, `L23 <https://github.com/scottclowe/python-template-repo/blob/master/docs/conf.py#L23>`__::
+    - In ``docs/conf.py``, `L23 <https://github.com/KamranBinaee/RGnet/blob/master/docs/conf.py#L23>`__::
 
         from package_name import __meta__ as meta  # noqa: E402
 
-    - In ``docs/index.rst``, `L1 <https://github.com/scottclowe/python-template-repo/blob/master/docs/index.rst#L1>`__::
+    - In ``docs/index.rst``, `L1 <https://github.com/KamranBinaee/RGnet/blob/master/docs/index.rst#L1>`__::
 
         package_name documentation
 
-    - In ``.github/workflows/test.yaml``, `L78 <https://github.com/scottclowe/python-template-repo/blob/master/.github/workflows/test.yaml#L78>`__, and ``.github/workflows/test-release-candidate.yaml``, `L90 <https://github.com/scottclowe/python-template-repo/blob/master/.github/workflows/test-release-candidate.yaml#L90>`__::
+    - In ``.github/workflows/test.yaml``, `L78 <https://github.com/KamranBinaee/RGnet/blob/master/.github/workflows/test.yaml#L78>`__, and ``.github/workflows/test-release-candidate.yaml``, `L90 <https://github.com/KamranBinaee/RGnet/blob/master/.github/workflows/test-release-candidate.yaml#L90>`__::
 
         python -m pytest --cov=package_name --cov-report term --cov-report xml --cov-config .coveragerc --junitxml=testresults.xml
 
