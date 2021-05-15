@@ -1,6 +1,6 @@
 |GHA tests| |Codecov report| |pre-commit| |black|
 
-Python Template Repository
+Robust Gaze Net Repository
 ==========================
 
 This repository gives a fully-featured template or skeleton for new Python repositories.
