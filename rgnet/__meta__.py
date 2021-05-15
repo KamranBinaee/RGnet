@@ -1,8 +1,8 @@
-name = "package-name"  # See https://www.python.org/dev/peps/pep-0008/
+name = "RGnet"  # See https://www.python.org/dev/peps/pep-0008/
 path = name.lower().replace("-", "_").replace(" ", "_")
 version = "0.1.dev0"  # https://python.org/dev/peps/pep-0440 https://semver.org
-author = "Author Name"
-author_email = ""
+author = "Kamran Binaee"
+author_email = "kbinaee@unr.edu"
 description = ""  # One-liner
-url = ""  # your project homepage
+url = "https://sites.google.com/g.rit.edu/kamranbinaee/home"  # your project homepage
 license = "MIT"  # See https://choosealicense.com

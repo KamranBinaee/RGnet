@@ -27,7 +27,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: ["2.7", "3.5", "3.9"]
+        python-version: ["3.5", "3.9"]
         include:
           - os: windows-latest
             python-version: "3.9"
@@ -75,7 +75,7 @@ jobs:
 
     - name: Test with pytest
       run: |
-        python -m pytest --cov=package_name --cov-report term --cov-report xml --cov-config .coveragerc --junitxml=testresults.xml
+        python -m pytest --cov=your_actual_package_name --cov-report term --cov-report xml --cov-config .coveragerc --junitxml=testresults.xml
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
