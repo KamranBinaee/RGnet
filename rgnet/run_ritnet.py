@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
     save_video = True
     save_labels = False
-    save_directory = "/home/kamran/temp_sync/Workshop_Paper/Results"
+    save_directory = "/hdd01/kamran_sync/Projects/Deep_Pupil_Tracking/Results"
     gamma = args.gamma
     video_file = args.video_file
     session_id = video_file[-28:-9]
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     print('Frame Size :[', frame_height,frame_width, ']')
     start_index = 60*120
-    end_index = 2*60*120 # number_of_frames
+    end_index = 4*60*120 # number_of_frames
     print('Start/End Index :[', start_index, end_index, ']')
 
 
@@ -162,9 +162,11 @@ if __name__ == '__main__':
             H, W = pilimg.width , pilimg.height
            
             table = 255.0*(np.linspace(0, 1, 256)**gamma)  ##use Gamma correction
+
+            # Todo: Pass a flag for gamma if 0 or 1 ignore
             pilimg = cv2.LUT(np.array(pilimg), table)
-                   
             img = clahe.apply(np.array(np.uint8(pilimg)))    ##use CLAHE
+            # img = np.array(np.uint8(pilimg))
             #plt.imsave('/hdd01/Deep_Gaze_Tracking/RIT-Net/vedb_data4/CLAHE_{}.png'.format(index[i]),img)
             #print(img)
             img = Image.fromarray(img)      
