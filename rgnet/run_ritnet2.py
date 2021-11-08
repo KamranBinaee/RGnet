@@ -33,7 +33,7 @@ def fit_ellipse(raw_frame, input_image, ellipse_model):
     residual = None
     model = ellipse_model
     # raw_frame = np.load(array_path + "/" + array_files[i])
-    print(raw_frame.shape)
+    # print(raw_frame.shape)
     # a = np.array([raw_frame, raw_frame, raw_frame])
     # raw_frame = a
     # print(raw_frame.shape)
@@ -218,7 +218,7 @@ if __name__ == '__main__':
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     print('Frame Size :[', frame_height,frame_width, ']')
-    start_index = 60*120
+    start_index = 1*60*120
     end_index = 4*60*120 # number_of_frames
     print('Start/End Index :[', start_index, end_index, ']')
 
@@ -237,7 +237,7 @@ if __name__ == '__main__':
         print('output video file: {}'.format(out_video_file) )
         fourcc = 'mp4v'
         # out = cv2.VideoWriter(out_video_file,cv2.VideoWriter_fourcc(*fourcc), 120, (1200,400)) #size
-        out = cv2.VideoWriter(out_video_file,cv2.VideoWriter_fourcc(*fourcc), 5, (800,400)) #size
+        out = cv2.VideoWriter(out_video_file,cv2.VideoWriter_fourcc(*fourcc), 30, (800,400)) #size
     else:
         print("\n No video output being saved!")
 
@@ -278,7 +278,7 @@ if __name__ == '__main__':
     ellipse_model = EllipseModel()
     with torch.no_grad():
         #for i, batchdata in tqdm(enumerate(testloader),total=len(testloader)):
-        for i in range(start_index, end_index,40):
+        for i in range(start_index, end_index,4):
     
             # Read the next frame from the video.
             raw_image = vid.get_data(i)
