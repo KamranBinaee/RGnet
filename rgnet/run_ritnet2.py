@@ -30,6 +30,37 @@ import pandas as pd
 
 #%%
 
+def increase_brightness(img, value=30):
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    h, s, v = cv2.split(hsv)
+
+    lim = 255 - value
+    v[v > lim] = 255
+    v[v <= lim] += value
+
+    final_hsv = cv2.merge((h, s, v))
+    final_img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
+    return final_img
+
+
+def apply_preprocessing(img, gamma, beta):
+    if gamma > 0:
+        table = 255.0 * (np.linspace(0, 1, 256) ** gamma)
+        contrast_image = cv2.LUT(np.array(img), table)
+    else:
+        contrast_image = img
+    if beta > 0:
+        new_image = increase_brightness(contrast_image.astype(np.uint8), value=beta)
+    else:
+        new_image = contrast_image.astype(np.uint8)
+
+    # clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(12, 12))
+    # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # new_image = clahe.apply(img)
+    # new_image = cv2.cvtColor(new_image, cv2.COLOR_GRAY2BGR)
+    return new_image.astype(np.uint8)
+
+
 def fit_ellipse(raw_frame, input_image, ellipse_model, frame_number, pupil_df, eye_id, ts):
     residual = None
     detection_method = "retrained_ritnet"
@@ -241,6 +272,14 @@ if __name__ == '__main__':
                    # "2021_04_06_18_37_22", #UNR, indoor office, Kamran
                    # "2021_02_04_16_42_40", #UNR, indoor walking, Kaylie
                    # "2021_10_21_15_51_33", #UNR, indoor Lab meeting, Mark
+                "2021_05_19_16_01_26",  # Indoor Office, Bharath
+                "2021_05_19_16_17_44",  # Indoor Walking, Bharath
+                "2021_06_18_14_58_13",  # Indoor Meeting, Matt
+                "2021_06_21_16_06_24",  # Indoor Office work, Matt
+
+                "2021_05_10_18_29_39",  # Indoor Kitchen, Michelle
+                "2021_06_03_16_42_02",  # Indoor housework, Jenn
+                "2021_06_03_16_48_45",  # Indoor planting, Jenn
 
                     # "2021_04_29_11_54_15", #Bates, work on laptop, Juliet
                     # "2021_04_14_15_05_21", #Bates, indoor water plants, Jennifer
@@ -256,6 +295,7 @@ if __name__ == '__main__':
                     # "2021_05_11_16_58_35", #UNR, outdoor walking, Pogen
                     # "2021_05_28_08_54_15", #UNR, outdoor walking, Mark
 
+                "2021_11_04_13_50_30",  #Bates, Outdoor, Walking, Jenn
                     # "2021_11_04_14_12_36", #Bates, Swing, Jennifer
                     # "2021_10_19_16_07_29", #Bates, outdoor hiking, Jenn
                     # "2021_10_24_13_35_37", #Bates, outdoor car ride, Michelle
@@ -272,7 +312,7 @@ if __name__ == '__main__':
 
             save_video = True
             save_labels = False
-            save_directory = "/hdd01/kamran_sync/Projects/Deep_Pupil_Tracking/Results3"
+            save_directory = "/hdd01/kamran_sync/Projects/Deep_Pupil_Tracking/Results4"
             gamma = args.gamma
             # video_file = args.video_file
             session_id = video_file[-28:-9]
@@ -376,12 +416,21 @@ if __name__ == '__main__':
                     #pilimg = Image.open(imagepath).convert("L")     #use L instead of Grayscale image
                     H, W = pilimg.width , pilimg.height
 
-                    table = 255.0*(np.linspace(0, 1, 256)**gamma)  ##use Gamma correction
+                    # table = 255.0*(np.linspace(0, 1, 256)**gamma)  ##use Gamma correction
+                    #
+                    # # Todo: Pass a flag for gamma if 0 or 1 ignore
+                    # pilimg = cv2.LUT(np.array(pilimg), table)
+                    # img = clahe.apply(np.array(np.uint8(pilimg)))    ##use CLAHE
+                    # img = raw_image
 
-                    # Todo: Pass a flag for gamma if 0 or 1 ignore
-                    pilimg = cv2.LUT(np.array(pilimg), table)
-                    img = clahe.apply(np.array(np.uint8(pilimg)))    ##use CLAHE
-                    img = raw_image
+                    if eye_id == 0:
+                        gamma = .5
+                        beta = 40
+                    else:
+                        gamma = 0.4
+                        beta = 60
+                    img = apply_preprocessing(raw_image, gamma, beta)
+
                     # img = np.array(np.uint8(pilimg))
                     #plt.imsave('/hdd01/Deep_Gaze_Tracking/RIT-Net/vedb_data4/CLAHE_{}.png'.format(index[i]),img)
                     #print(img)
